@@ -54,7 +54,8 @@
         .luz {
             width: 12%;
             height: 5vh;
-            background-color: rgb(92, 88, 88);
+            background-color: rgb(92, 88, 88); /*Default*/
+            /*background-color: #12e012; when game starts, change to this color*/
             border-radius: 50%;
             border: 5px solid #000;
             box-shadow: 0px 8px 0px #00000047;
@@ -67,8 +68,15 @@
             background-color: #000;
             border: 2px solid #fff;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
             gap: 10px;
+            overflow: auto;
+        }
+        
+        .botoes {
+            background-color: #000; /*Default*/
+            /*background-color: #39a4d2; when game starts, change to this color */
         }
 
         .display-jogador {
@@ -82,7 +90,7 @@
             overflow: auto;
         }
 
-        .botoes {
+        .botoes-jogador {
             background-color: #ddd;
             border: 5px solid #000;
             border-radius: 10px;
@@ -103,7 +111,17 @@
                     <div class="luz-4 luz"></div>
                     <div class="luz-5 luz"></div>
                 </div>
-                <div class="display"></div>
+                <div class="display">
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                </div>
             </div>
         </div>
         <div class="externa">
@@ -116,15 +134,15 @@
                     <div class="luz-5 luz"></div>
                 </div>
                 <div class="display-jogador">
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
-                    <div class="botoes"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
+                    <div class="botoes-jogador"></div>
                 </div>
             </div>
         </div>
