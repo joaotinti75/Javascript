@@ -2,19 +2,18 @@ let botoes = document.querySelectorAll('.botoes')
 let luzes = document.querySelectorAll('.luzes .luz')
 let botoesJogador = document.querySelectorAll('.botoes-jogador')
 let luzesJogador = document.querySelectorAll('.luzes-jogador .luz')
-let listaNumAleatorioCopy = []
 
-function executarComputador(nivel){
+function executarComputador(nivel, callback){
     let listaNumAleatorio = []
     let indexLuz = 0
     let interval = setInterval(() => {
         if (listaNumAleatorio.length === nivel){
             console.log('terminou')
-            listaNumAleatorioCopy = listaNumAleatorio
             listaNumAleatorio.forEach((num) => {
                 botoes[num].style.backgroundColor = '#000'
             })
             clearInterval(interval)
+            callback(nivel, listaNumAleatorio)
         } else {
             let numAleatorio = Math.floor(Math.random() * botoes.length)  //varia de 0 a 8
             listaNumAleatorio.forEach((num) => {
@@ -32,18 +31,34 @@ function executarComputador(nivel){
 
 function executarJogador(nivel, listaNumeros){
     let indexLuzJogador = 0
-    console.log(listaNumeros)
-    alert('ola mundo')
+    let indexLista = 0
     botoesJogador.forEach((botao) => {
         botao.addEventListener('click', () => {
             botoesJogador.forEach((btn) => {
                 btn.style.backgroundColor = '#ddd'
             })
+
+            if (botoesJogador[listaNumeros[indexLista]] === botao) {
+                console.log(botoesJogador[listaNumeros[indexLista]] === botao)
+                ++indexLista%nivel
+                botao.style.backgroundColor = '#39a4d2'
+                luzesJogador[indexLuzJogador].style.backgroundColor = '#12e012'
+            } else {
+                //alert('você errou, sinto muito')
+                luzesJogador.forEach(luz => {
+                    luz.style.backgroundColor = 'red'
+                })
+
+                luzes.forEach(luz => {
+                    luz.style.backgroundColor = 'red'
+                })
+
+                botoesJogador.forEach((btn) => {
+                    btn.style.backgroundColor = 'red'
+                })
+            }
             
-            botao.style.backgroundColor = '#39a4d2'
-            luzesJogador[indexLuzJogador].style.backgroundColor = '#12e012'
-            
-            if (indexLuzJogador === nivel) {
+            if (indexLuzJogador === nivel - 1) {
                 return
             } else {
                 ++indexLuzJogador
@@ -53,6 +68,5 @@ function executarJogador(nivel, listaNumeros){
     })
 }
 
-executarComputador(3)
-setTimeout(executarJogador(3-1, listaNumAleatorioCopy), 3000)
+executarComputador(3, executarJogador)
 
