@@ -42,7 +42,7 @@
             border-radius: 2%;
         }
 
-        .luzes {
+        .luzes, .luzes-jogador {
             width: 80%;
             display: flex;
             justify-content: space-around;
@@ -51,7 +51,7 @@
             padding-bottom: 20px;
         }
 
-        .luz {
+        .luzes .luz, .luzes-jogador .luz {
             width: 12%;
             height: 5vh;
             background-color: rgb(92, 88, 88); /*Default*/
@@ -105,11 +105,11 @@
         <div class="externa">
             <div class="interna">
                 <div class="luzes">
-                    <div class="luz-1 luz"></div>
-                    <div class="luz-2 luz"></div>
-                    <div class="luz-3 luz"></div>
-                    <div class="luz-4 luz"></div>
-                    <div class="luz-5 luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
                 </div>
                 <div class="display">
                     <div class="botoes"></div>
@@ -126,12 +126,12 @@
         </div>
         <div class="externa">
             <div class="interna">
-                <div class="luzes">
-                    <div class="luz-1 luz"></div>
-                    <div class="luz-2 luz"></div>
-                    <div class="luz-3 luz"></div>
-                    <div class="luz-4 luz"></div>
-                    <div class="luz-5 luz"></div>
+                <div class="luzes-jogador">
+                    <div class="luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
+                    <div class="luz"></div>
                 </div>
                 <div class="display-jogador">
                     <div class="botoes-jogador"></div>
