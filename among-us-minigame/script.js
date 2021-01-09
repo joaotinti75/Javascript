@@ -7,10 +7,13 @@ let listaNumAleatorio = []
 let interval = setInterval(() => {
         if (listaNumAleatorio.length === 3){
             console.log('terminou')
-            console.log(listaNumAleatorio)
+            //console.log(listaNumAleatorio)
             clearInterval(interval)
         } else {
-            var numAleatorio = Math.floor(Math.random() * botoes.length)  //varia de 0 a 8
+            let numAleatorio = Math.floor(Math.random() * botoes.length)  //varia de 0 a 8
+            listaNumAleatorio.forEach((num) => {
+                botoes[num].style.backgroundColor = '#000'
+            })
             listaNumAleatorio.push(numAleatorio)
             botoes[numAleatorio].style.backgroundColor = '#39a4d2'
             luzes[index_luz].style.backgroundColor = '#12e012'
