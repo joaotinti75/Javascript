@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!--Art made by João Tinti (GitHub: joaotinti75)-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stat the reactor</title>
+    <style>
+        body, html {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-evenly;
+            width: 70%;
+            padding-top: 90px;
+        }
+
+        .externa {
+            background-color: #666;
+            width: 31vw;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid #000;
+            border-radius: 2%;
+
+        }
+
+        .interna {
+            background-color: #aaa;
+            width: 27vw;
+            height: 55vh;
+            display: flex;
+            flex-direction: column;
+            align-items: space-between;
+            border-radius: 2%;
+        }
+
+        .luzes {
+            width: 80%;
+            display: flex;
+            justify-content: space-around;
+            padding-top: 30px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+
+        .luz {
+            width: 12%;
+            height: 5vh;
+            background-color: rgb(92, 88, 88);
+            border-radius: 50%;
+            border: 5px solid #000;
+            box-shadow: 0px 8px 0px #00000047;
+        }
+
+        .display {
+            width: 70%;
+            height: 40vh;
+            margin: 30px auto;
+            background-color: #000;
+            border: 2px solid #fff;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .display-jogador {
+            width: 70%;
+            height: 40vh;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            overflow: auto;
+        }
+
+        .botoes {
+            background-color: #ddd;
+            border: 5px solid #000;
+            border-radius: 10px;
+            box-shadow: 10px 10px 10px #00000047;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="externa">
+            <div class="interna">
+                <div class="luzes">
+                    <div class="luz-1 luz"></div>
+                    <div class="luz-2 luz"></div>
+                    <div class="luz-3 luz"></div>
+                    <div class="luz-4 luz"></div>
+                    <div class="luz-5 luz"></div>
+                </div>
+                <div class="display"></div>
+            </div>
+        </div>
+        <div class="externa">
+            <div class="interna">
+                <div class="luzes">
+                    <div class="luz-1 luz"></div>
+                    <div class="luz-2 luz"></div>
+                    <div class="luz-3 luz"></div>
+                    <div class="luz-4 luz"></div>
+                    <div class="luz-5 luz"></div>
+                </div>
+                <div class="display-jogador">
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                    <div class="botoes"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
