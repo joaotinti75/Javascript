@@ -13,7 +13,7 @@ function executarComputador(nivel, callback){
                 botoes[num].style.backgroundColor = '#000'
             })
             clearInterval(interval)
-            console.log(callback)
+            console.log('Enviado:', listaNumAleatorio)
             callback(nivel, listaNumAleatorio, executarComputador)
 
         } else {
@@ -39,18 +39,27 @@ function executarJogador(nivel, listaNumeros, callback){
             botoesJogador.forEach((btn) => {
                 btn.style.backgroundColor = '#ddd'
             })
-
+            //console.log('Lista de numeros recebida dentro do evento',listaNumeros)
+            //console.log(indexLista, indexLuzJogador)
+            console.log(botoesJogador[listaNumeros[indexLista]] === botao)
             if (botoesJogador[listaNumeros[indexLista]] === botao) {
-                ++indexLista%nivel
-                if (indexLista === nivel) {
+                if (indexLista === nivel - 1) {
+                    botao.style.backgroundColor = '#ddd'
+
                     callback(++nivel%6, executarJogador)
                     //callback(++nivel%6)
-                } else {
-                    botao.style.backgroundColor = '#39a4d2'
-                    luzesJogador[indexLuzJogador].style.backgroundColor = '#12e012'
-                }
+                } 
+                console.log(listaNumeros)
+                botao.style.backgroundColor = '#39a4d2'
+                luzesJogador[indexLuzJogador].style.backgroundColor = '#12e012'
+                
+                ++indexLista%nivel
+                ++indexLuzJogador
+                
+
             } else {
-                //alert('você errou, sinto muito')
+                console.log('bug:')
+                console.log(listaNumeros, indexLista, indexLuzJogador)
                 luzesJogador.forEach(luz => {
                     luz.style.backgroundColor = 'red'
                 })
@@ -62,17 +71,11 @@ function executarJogador(nivel, listaNumeros, callback){
                 botoesJogador.forEach((btn) => {
                     btn.style.backgroundColor = 'red'
                 })
-            }
-            
-            if (indexLuzJogador === nivel - 1) {
-                return
-            } else {
-                ++indexLuzJogador
-            }                        
-        })
+            } 
+        }) 
     })
 }
 //nivel varia de 1 a 5
-executarComputador(3, executarJogador)
+executarComputador(1, executarJogador)
 
 
