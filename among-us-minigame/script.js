@@ -13,7 +13,9 @@ function executarComputador(nivel, callback){
                 botoes[num].style.backgroundColor = '#000'
             })
             clearInterval(interval)
-            callback(nivel, listaNumAleatorio)
+            console.log(callback)
+            callback(nivel, listaNumAleatorio, executarComputador)
+
         } else {
             let numAleatorio = Math.floor(Math.random() * botoes.length)  //varia de 0 a 8
             listaNumAleatorio.forEach((num) => {
@@ -26,23 +28,27 @@ function executarComputador(nivel, callback){
             console.log('ola mundo')
         } 
     }, 1000)
-
 }
 
-function executarJogador(nivel, listaNumeros){
+function executarJogador(nivel, listaNumeros, callback){
     let indexLuzJogador = 0
     let indexLista = 0
     botoesJogador.forEach((botao) => {
         botao.addEventListener('click', () => {
+            //A cada evento capturado, executar isso:
             botoesJogador.forEach((btn) => {
                 btn.style.backgroundColor = '#ddd'
             })
 
             if (botoesJogador[listaNumeros[indexLista]] === botao) {
-                console.log(botoesJogador[listaNumeros[indexLista]] === botao)
                 ++indexLista%nivel
-                botao.style.backgroundColor = '#39a4d2'
-                luzesJogador[indexLuzJogador].style.backgroundColor = '#12e012'
+                if (indexLista === nivel) {
+                    callback(++nivel%6, executarJogador)
+                    //callback(++nivel%6)
+                } else {
+                    botao.style.backgroundColor = '#39a4d2'
+                    luzesJogador[indexLuzJogador].style.backgroundColor = '#12e012'
+                }
             } else {
                 //alert('você errou, sinto muito')
                 luzesJogador.forEach(luz => {
@@ -62,11 +68,11 @@ function executarJogador(nivel, listaNumeros){
                 return
             } else {
                 ++indexLuzJogador
-            }
-                        
+            }                        
         })
     })
 }
-
+//nivel varia de 1 a 5
 executarComputador(3, executarJogador)
+
 

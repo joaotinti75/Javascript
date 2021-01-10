@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste callback functions</title>
+</head>
+<body>
+    <h1>Isso é um teste</h1>
+    <script>
+        function A(callback){
+            console.log('Função A') //Quando A for chamada, ela imprime "Função A"
+            callback(A) //Quem é o parâmetro da função callback(B)? A!
+            
+        }
+        function B(callback){
+            console.log('Função B') //Quando B for chamada, ela imprime "Função B"
+            callback(B) //Quem é o parâmetro da função callback(A)? B!
+        }
+        
+        A(B)
+    </script>
+</body>
+</html>
