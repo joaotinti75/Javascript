@@ -1,26 +1,69 @@
 class UserController {
-    constructor(formId){
+    constructor(formId, tableId){
 
         this.formEl = document.getElementById(formId)
+        this.formElAr = [...this.formEl.elements]
+        this.tableEl = document.getElementById(tableId)
+
                  
+        this.onSubmit()
     }
 
     onSubmit(){
-        this.formEl.addEventListener('submit', event=>{
+        this.formEl.addEventListener('submit', event => {
 
             event.preventDefault() //nao envia os dados para a url quando o botao de submit é clicado
-        
-            this.getValues()
-            addLine(objectUser)
+
+            let values = this.getValues()
+            
+            values.photo = ''
+
+            this.getPhoto().then(
+                function (content) {
+                    values.photo = content
+                    this.addLine(values)
+            }, 
+                function (e) {
+                    console.error(e)
+                }
+            ) 
+
         })
         
+    }
+
+    getPhoto(){
+
+        return new promise(function(resolve, reject){
+            let fileReader = new FileReader()
+
+            let elements = this.formElAr.filter(item => {
+                if (item.name === 'photo') {
+                    return item
+                } 
+            })
+    
+            let file = elements[0].files[0] // com esse objeto File, eu consigo passar para o fileReader
+            
+            //console.log(elements[0].files[0]) 
+    
+            //  Quando a imagem terminar de ser carregada, execute esta função callback
+            fileReader.onload = () => { 
+                resolve(fileReader.result)
+            }
+
+            fileReader.onerror = e => {
+                reject(e)
+            }
+    
+            fileReader.readAsDataURL(file)
+        })
     }
 
     getValues(){
 
         let user = {}
-
-        this.formEl.elements.forEach(function(f){
+        this.formElAr.forEach(function(f){
             if (f.name == 'gender') {
                 if (f.checked){ 
                     user[f.name] = f.value
@@ -30,7 +73,7 @@ class UserController {
             }
         })
     
-        return new User(
+        return new User( //instanciando um objeto da classe User
            user.name,
            user.gender,
            user.birth,
@@ -42,13 +85,12 @@ class UserController {
         )
     }
 
-    addLine(dataUser, tableId){
-
+    addLine(dataUser){
     
         var tr = document.createElement('tr')
     
         tr.innerHTML = `
-            <td><img src="dist/img/user1-128x128.jpg" alt="User Image" class="img-circle img-sm"></td>
+            <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
             <td>${dataUser.name}</td>
             <td>${dataUser.email}</td>
             <td>${dataUser.admin}</td>
@@ -59,7 +101,7 @@ class UserController {
             </td>
         `
     
-        document.querySelector('#table-users').appendChild(tr)
+        this.tableEl.appendChild(tr)
     }
     
         
