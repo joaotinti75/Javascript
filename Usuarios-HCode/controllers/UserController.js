@@ -14,16 +14,22 @@ class UserController {
 
             event.preventDefault() //nao envia os dados para a url quando o botao de submit é clicado
 
+            let btn = this.formEl.querySelector('[type=submit]')
+
+            btn.disabled = true //desabilitando o botao
+
             let values = this.getValues()
             
             values.photo = ''
 
             this.getPhoto().then(
-                function (content) {
+                (content) => {
                     values.photo = content
                     this.addLine(values)
+                    btn.disabled = false
+                    this.formEl.reset() //para limpar o formulario
             }, 
-                function (e) {
+                (e) => {
                     console.error(e)
                 }
             ) 
@@ -34,7 +40,7 @@ class UserController {
 
     getPhoto(){
 
-        return new promise(function(resolve, reject){
+        return new Promise((resolve, reject) => {
             let fileReader = new FileReader()
 
             let elements = this.formElAr.filter(item => {
@@ -42,34 +48,36 @@ class UserController {
                     return item
                 } 
             })
-    
             let file = elements[0].files[0] // com esse objeto File, eu consigo passar para o fileReader
-            
-            //console.log(elements[0].files[0]) 
     
-            //  Quando a imagem terminar de ser carregada, execute esta função callback
             fileReader.onload = () => { 
-                resolve(fileReader.result)
+                resolve(fileReader.result) //retorna o fileReader.result quando o then for chamado
             }
 
-            fileReader.onerror = e => {
+            fileReader.onerror = e => { //retorna o erro quando a função de erro for chamada
                 reject(e)
             }
     
-            fileReader.readAsDataURL(file)
+            if (file) {
+                fileReader.readAsDataURL(file)
+            } else {
+                resolve('dist/img/boxed-bg.jpg') //imagem padrão
+            }
         })
     }
 
     getValues(){
 
         let user = {}
-        this.formElAr.forEach(function(f){
+        this.formElAr.forEach(function(f){ //esse f é de formulario
             if (f.name == 'gender') {
                 if (f.checked){ 
                     user[f.name] = f.value
                 }
+            } else if (f.name == 'admin') {
+                user[f.name] = f.checked //ou retorna true ou false
             } else {
-                user[f.name] = f.value
+                user[f.name] = f.value //retorna o valor digitado
             }
         })
     
@@ -93,7 +101,7 @@ class UserController {
             <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
             <td>${dataUser.name}</td>
             <td>${dataUser.email}</td>
-            <td>${dataUser.admin}</td>
+            <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
             <td>${dataUser.birth}</td>
             <td>
             <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>

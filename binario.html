@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binário x Decimal</title>
+    <style>
+      body {
+        background-color: #333;
+        background-image: url(https://media.giphy.com/media/WoD6JZnwap6s8/giphy.gif);
+      }
+
+      h1 {
+        font-size: 40px;
+        text-align: center;
+      }
+
+      p,
+      input {
+        font-size: 30px;
+      }
+
+      input {
+        text-align: center;
+      }
+
+      h1,
+      p {
+        color: #fff;
+      }
+
+      #binario-decimal,
+      #decimal-binario {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .resultado {
+        width: 373px;
+        height: 60px;
+        line-height: 60px;
+        background-color: #fff;
+        font-size: 30px;
+        text-align: center;
+        overflow: auto;
+      }
+
+      #container {
+        background-color: #333;
+        width: 80%;
+        padding: 50px 20px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Converta binário para decimal:</h1>
+      <div id="binario-decimal">
+        <div class="binario">
+          <p>Binário:</p>
+          <input type="number" min="0" />
+        </div>
+        <div class="decimal">
+          <p>Decimal:</p>
+          <div class="resultado"></div>
+        </div>
+      </div>
+
+      <h1>Converta decimal para binário:</h1>
+      <div id="decimal-binario">
+        <div class="decimal">
+          <p>Decimal:</p>
+          <input type="number" min="0" />
+        </div>
+        <div class="binario">
+          <p>Binário:</p>
+          <div class="resultado"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let binaryInputEl = document.querySelector("#binario-decimal input");
+      let decimalResultEl = document.querySelector("#binario-decimal .resultado");
+
+      let decimalInputEl = document.querySelector("#decimal-binario input");
+      let binaryResultEl = document.querySelector("#decimal-binario .resultado");
+
+      function binaryToDecimal(binNum) {
+        if (notBinary(binNum)) {
+          return "-";
+        } else {
+          let result = 0;
+          for (let i = 0; i < binNum.length; i++) {
+            let operation = 2 ** i * Number(binNum[binNum.length - 1 - i]);
+            result += operation;
+          }
+
+          return String(result);
+        }
+      }
+
+      function clearDecimalResult() {
+        decimalResultEl.innerHTML = "";
+      }
+
+      function notBinary(binNum) {
+        for (i of binNum) {
+          if (i >= 2) {
+            return true;
+          }
+        }
+      }
+
+      function decimalToBinary(decNum) {
+        let remainderDigits = [];
+        let quotientDigits = [];
+        decNum = Number(decNum);
+        if (decNum === 0) {
+          return 0;
+        } else if (decNum === 1) {
+          return 1;
+        } else {
+          while (decNum >= 2) {
+            remainderDigits.push(decNum % 2);
+            decNum = parseInt(decNum / 2);
+            quotientDigits.push(decNum);
+          }
+          return (
+            String(quotientDigits[quotientDigits.length - 1]) +
+            remainderDigits.reverse().join("")
+          );
+        }
+      }
+
+      function clearBinaryResult() {
+        binaryResultEl.innerHTML = "";
+      }
+
+      binaryInputEl.addEventListener("input", () => {
+        clearDecimalResult();
+        decimalResultEl.innerHTML = binaryToDecimal(binaryInputEl.value);
+      });
+
+      decimalInputEl.addEventListener("input", () => {
+        clearBinaryResult();
+        binaryResultEl.innerHTML = decimalToBinary(decimalInputEl.value);
+      });
+    </script>
+  </body>
+</html>
