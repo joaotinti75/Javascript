@@ -19,6 +19,8 @@ class UserController {
             btn.disabled = true //desabilitando o botao
 
             let values = this.getValues()
+        
+            if (!values) return false;
             
             values.photo = ''
 
@@ -69,7 +71,15 @@ class UserController {
     getValues(){
 
         let user = {}
+        let isValid = true
         this.formElAr.forEach(function(f){ //esse f é de formulario
+
+            //VALIDANDO O FORMULARIO VIA JAVASCRIPT
+            if (['name','email','password'].indexOf(f.name) > -1 && !f.value) {
+                f.parentElement.classList.add('has-error')
+                isValid = false
+            }
+
             if (f.name == 'gender') {
                 if (f.checked){ 
                     user[f.name] = f.value
@@ -81,6 +91,10 @@ class UserController {
             }
         })
     
+        if (!isValid) {
+            return false; //para a execução da função
+        }
+
         return new User( //instanciando um objeto da classe User
            user.name,
            user.gender,
@@ -96,13 +110,15 @@ class UserController {
     addLine(dataUser){
     
         var tr = document.createElement('tr')
+
+        tr.dataset.user = JSON.stringify(dataUser) //o objeto dataUser é convertido em string JSON, ou seja, isso é uma string
     
         tr.innerHTML = `
             <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
             <td>${dataUser.name}</td>
             <td>${dataUser.email}</td>
             <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
-            <td>${dataUser.birth}</td>
+            <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
             <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
             <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
@@ -110,8 +126,27 @@ class UserController {
         `
     
         this.tableEl.appendChild(tr)
+
+        this.updateCount()
+
     }
     
+    updateCount(){
+        let numberUsers = 0
+        let numberAdmin = 0
+        let childrens = [...this.tableEl.children]
+
+        childrens.forEach(tr => {
+            numberUsers++
+            let user = JSON.parse(tr.dataset.user) //convertendo a string JSON novamente para um objeto
+
+            if (user._admin) numberAdmin++
+
+        })
+
+        document.querySelector('#number-users').innerHTML = numberUsers
+        document.querySelector('#number-users-admin').innerHTML = numberAdmin
+    }
         
 
 }
